@@ -11,13 +11,15 @@ app.get('/', function(req, res) {
 
 app.get('/video/:filename', function(req, res) {
   res.contentType('flv');
+  console.info('req.params.filename', req.params.filename);
   // make sure you set the correct path to your video file storage
-  var pathToMovie = '/path/to/storage/' + req.params.filename; 
+  var pathToMovie = '/home/robert/Sites/kern/content/videos/' + req.params.filename; 
   var proc = new ffmpeg(pathToMovie)
     // use the 'flashvideo' preset (located in /lib/presets/flashvideo.js)
     .usingPreset('flashvideo')
     // save to stream
     .writeToStream(res, function(retcode, error){
+      console.error(error);
       console.log('file has been converted succesfully');
     });
 });
